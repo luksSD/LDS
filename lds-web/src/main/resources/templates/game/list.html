@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Listar Jogos</title>
+</head>
+<body>
+
+	<div layout:fragment="body">
+	
+	            <main>
+                <div class="container-fluid">
+                    <h1 class="mt-4">Lista de jogos</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item">Home</li>
+                        <li class="breadcrumb-item active">Lista de jogos</li>
+                    </ol>
+
+
+                    <div class="row">
+
+                        <div class="game-item col-md-3 col-sm-4 col-6 mt-2 mb-5" th:each="jogo : ${listaJogos}">
+                            <div class="h-150 card bg-dark text-light">
+                                <div class="card-title text-center mt-1" th:text="${jogo.nome}">Nome Aqui</div>
+                                <div class="card-body text-center no-padding">
+                                    <a href="../game/game-detail.html">
+                                        <img th:src="@{../resources/assets/img/{image}(image=${jogo.imagemPrincipal})}" class="img-fluid" />
+                                    </a>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+                                    <a class="small text-white" href="#" th:text="'R$ ' + ${jogo.preco}">R$199,90</a>
+
+                                    <a class="small text-white" href="#">10</a>
+                                    <div class="small text-white"><i class="fas fa-comment"></i></div>
+
+                                    <a class="small text-white" href="#">5</a>
+                                    <div class="small text-white"><i class="fas fa-heart"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+ 
+                    </div>
+
+                </div>
+            </main>
+	
+	</div>
+
+</body>
+</html>

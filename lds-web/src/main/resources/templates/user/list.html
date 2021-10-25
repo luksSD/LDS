@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Listar</title>
+</head>
+<body>
+
+	<div layout:fragment="body">
+
+		<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Usuários</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item">Home</li>
+					<li class="breadcrumb-item active">Lista de usuários</li>
+				</ol>
+
+
+
+
+
+				<div class="card mb-4">
+					<div class="card-header">
+						<i class="fas fa-table mr-1"></i>Usuários cadastrados
+					</div>
+
+					<div class="card-body">
+						<div class="table-responsive">
+
+							<table class="table table-bordered" id="dataTable" width="100%"
+								cellspacing="0">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Nome</th>
+										<th>Email</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th>Id</th>
+										<th>Nome</th>
+										<th>Email</th>
+										<th></th>
+									</tr>
+								</tfoot>
+
+								<tbody>
+									<tr th:each="usuario : ${listaUsuarios}">
+										<td th:text="${usuario.id}">id aqui</td>
+										<td th:text="${usuario.nomeCompleto}">nome aqui</td>
+										<td th:text="${usuario.email}">tiburssinho@gmail.com</td>
+										<td>
+											<div class="row">
+
+												<div class="col-4">
+													<a th:href="@{/user/detalhes/{id} (id=${usuario.id})}"
+														class="btn btn-info btn-sm"> <i
+														class="fas fa-address-card"></i>
+													</a>
+
+												</div>
+												<div class="col-4">
+													<a th:href="@{/user/editar/{id} (id=${usuario.id})}"
+														class="btn btn-warning btn-sm"> <i class="fas fa-lock"></i>
+													</a>
+												</div>
+												<div class="col-4">
+
+													<a th:href="@{/user/deletar/{id} (id=${usuario.id})}"
+														class="btn btn-danger btn-sm"> <i
+														class="fas fa-user-alt-slash"></i>
+													</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+
+
+
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</main>
+	</div>
+</body>
+</html>

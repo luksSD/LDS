@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Detalhes</title>
+</head>
+<body>
+
+	<div layout:fragment="body">
+
+		<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Detalhes do Animal</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item">Home</li>
+					<li class="breadcrumb-item active">Detalhes</li>
+				</ol>
+
+
+				<div class="row">
+
+					<div class="mb-2 col-12 col-sm-5">
+						<div class="card">
+							<div class="card-body">
+								<div class="mb-3 text-center">
+									<img src="../resources/assets/img/avatar.jpg" width="200"
+										class="rounded-circle img-fluid" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-2 col-12 col-sm-7">
+
+						<div class="mb-2 card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-3">Nome</div>
+									<div class="col-sm-9" th:text="${animal.nome}">Nome</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">Descrição</div>
+									<div class="col-sm-9" th:text="${animal.descricao}">descrição</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">Idade</div>
+									<div class="col-sm-9">45 anos</div>
+								</div>
+								<hr>
+
+							</div>
+						</div>
+
+						<div class="mb-2">
+							<a class="btn btn-primary col-12"
+								th:href="@{/animal/editar/{id} (id=${animal.id})}">Editar</a>
+						</div>
+
+					</div>
+
+
+
+				</div>
+
+
+			</div>
+		</main>
+		</div>
+</body>
+</html>

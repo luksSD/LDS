@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Listar</title>
+</head>
+<body>
+
+	<div layout:fragment="body">
+
+		<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Formularios</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item">Home</li>
+					<li class="breadcrumb-item active">Listar</li>
+				</ol>
+
+
+
+
+
+				<div class="card mb-4">
+					<div class="card-header">
+						<i class="fas fa-table mr-1"></i>Cadastros do Formulario
+					</div>
+
+					<div class="card-body">
+						<div class="table-responsive">
+
+							<table class="table table-bordered" id="dataTable" width="100%"
+								cellspacing="0">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Noticia</th>
+										<th>Qtd Paginas</th>
+										<th>Titulo</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th>Id</th>
+										<th>Noticia</th>
+										<th>Qtd Paginas</th>
+										<th>Titulo</th>
+										<th></th>
+									</tr>
+								</tfoot>
+
+								<tbody>
+									<tr th:each="formulario : ${terceiroFormulario}">
+										<td th:text="${formulario.id}">id aqui</td>
+										<td th:text="${formulario.noticia}">noticia</td>
+										<td th:text="${formulario.quantidadePaginas}">1</td>
+										<td th:text="${formulario.titulo}">1</td>
+									</tr>
+
+
+
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</main>
+	</div>
+</body>
+</html>

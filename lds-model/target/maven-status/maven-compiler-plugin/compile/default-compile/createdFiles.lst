@@ -1,0 +1,6 @@
+br\fai\lds\model\Jogo.class
+br\fai\lds\model\BasePojo.class
+br\fai\lds\model\ImagemJogo.class
+br\fai\lds\model\UsuarioJogo.class
+br\fai\lds\model\Usuario.class
+br\fai\lds\model\Comentario.class

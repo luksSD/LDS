@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html layout:decorate="~{Layout}">
+<head>
+<meta charset="UTF-8">
+<title>Registrar</title>
+
+
+<script>
+	function validarSenha(){
+		
+		senha = document.getElementById('inputPassword').value;
+		confirmaSenha = document.getElementById('inputConfirmPassword').value;
+		
+		if (senha != confirmaSenha) {
+			alert("As senhas estão diferentes. \nFavor digitar as senhas novamente!");
+		} else {
+			formCadastro.submit();
+		}
+	
+	}
+	
+</script>
+
+
+</head>
+<body>
+
+	<div layout:fragment="body">
+
+		<div class="container-fluid">
+			<h1 class="mt-4">Animais</h1>
+			<ol class="breadcrumb mb-4">
+				<li class="breadcrumb-item">Home</li>
+				<li class="breadcrumb-item active">Cadastrar</li>
+			</ol>
+
+
+			<div class="row justify-content-center">
+				<div class="col-lg-9">
+					<div class="card shadow-lg border-0 rounded-lg mb-5">
+						<div class="card-header">
+							<h3 class="text-center font-weight-light my-4">Cadastre um animal</h3>
+						</div>
+
+
+						<div class="card-body">
+
+							<form th:action="@{/animal/create}" method="POST"	th:objetc="${animal}" id="formCadastro" name="formCadastro">
+								
+								<div class="form-row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="small mb-1" for="inputAnimalName">Nome do animal</label> 
+											<input class="form-control py-4" id="inputAnimalName" type="text" required placeholder="Insira seu nome do animal" th:field="${animal.nome}"/>
+										</div>
+									</div>
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="small mb-1" for="inputDescricao">Descrição</label>
+											<input class="form-control py-4" id="inputDescricao" type="text"  placeholder="Insira a descrição" th:field="${animal.descricao}"/>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="small mb-1" for="inputIdade">Idade</label>
+									<input class="form-control py-4" id="inputIdade" type="text"  placeholder="Insira a idade"	th:field="${animal.idade}"/>
+								</div>
+								
+								
+								<div class="form-group mt-4 mb-0">
+									<button class="btn btn-primary btn-block" type="submit">Cadastrar animal</button>
+								</div>
+							</form>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+</body>
+
+
+</html>

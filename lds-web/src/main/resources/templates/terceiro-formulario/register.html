@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html layout:decorate="~{Layout}">
+<head>
+<meta charset="UTF-8">
+<title>Registrar</title>
+
+
+<script>
+	
+	function cria(){
+		
+			formCadastro.submit();
+
+	
+	}
+
+	
+</script>
+
+
+
+</head>
+<body>
+
+	<div layout:fragment="body">
+
+		<div class="container-fluid">
+			<h1 class="mt-4">Formularios</h1>
+			<ol class="breadcrumb mb-4">
+				<li class="breadcrumb-item">Home</li>
+				<li class="breadcrumb-item active">Registrar</li>
+			</ol>
+
+
+			<div class="row justify-content-center">
+				<div class="col-lg-9">
+					<div class="card shadow-lg border-0 rounded-lg mb-5">
+						<div class="card-header">
+							<h3 class="text-center font-weight-light my-4">Criar</h3>
+						</div>
+
+
+						<div class="card-body">
+
+							<form th:action="@{/terceiro-formulario/create}" method="POST"	th:objetc="${terceiroFormulario}" id="formCadastro" name="formCadastro">
+								
+								<div class="form-group">
+									<label class="small mb-1" for="inputTitulo">Titulo</label>
+									<input class="form-control py-4" id="inputTitulo" type="text" placeholder="Insira o titulo"	th:field="${terceiroFormulario.titulo}"/>
+								</div>
+								
+								<div class="form-row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="small mb-1" for="inputNoticia">Noticia</label> 
+											<input class="form-control py-4" id="inputNoticia" type="text" required placeholder="Insira sua noticia" th:field="${terceiroFormulario.noticia}"/>
+										</div>
+									</div>
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="small mb-1" for="inputQuantidadePaginas">Quantidade de paginas</label>
+											<input class="form-control py-4" id="inputQuantidadePaginas"	type="text" required placeholder="Insira a quantidade de paginas" th:field="${terceiroFormulario.quantidadePaginas}"/>
+										</div>
+									</div>
+								</div>
+								
+								
+								
+								
+								<div class="form-group mt-4 mb-0">
+									<button class="btn btn-primary btn-block" type="button" onClick="cria()">
+										Criar a conta</button>
+								</div>
+							</form>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+</body>
+
+
+</html>
