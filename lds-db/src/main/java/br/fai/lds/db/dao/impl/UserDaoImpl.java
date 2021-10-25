@@ -204,7 +204,12 @@ public class UserDaoImpl implements UserDao {
 		try {
 			connection = ConnectionFactory.getConnection();
 
-			final String sql = "SELECT * FROM usuario;";
+			String sql = "SELECT * FROM usuario ";
+			sql += " WHERE TRUE ";
+
+			for (final String key : criteria.keySet()) {
+				sql += "  " + key + " '" + criteria.get(key) + "'";
+			}
 
 			preparedStatement = connection.prepareStatement(sql);
 
@@ -229,6 +234,8 @@ public class UserDaoImpl implements UserDao {
 			}
 
 		} catch (final Exception e) {
+
+			System.out.println(e.getMessage());
 
 		} finally {
 

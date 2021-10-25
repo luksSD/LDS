@@ -1,7 +1,10 @@
 package br.fai.lds.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -115,6 +118,37 @@ public class UserServiceImpl implements UserService {
 
 		return response;
 
+	}
+
+	@Override
+	public List<Usuario> readByCriteria(final String value) {
+
+		if (value.isEmpty()) {
+			return new ArrayList<Usuario>();
+		}
+
+		final String endpoint = "http://localhost:8085/api/v1/user/read-by-criteria";
+
+		List<Usuario> response = null;
+
+		try {
+			final Map<String, String> criteria = new HashMap<String, String>();
+			criteria.put("AND nome_completo ilike", "%" + value + "%");
+
+			final RestTemplate restTemplate = new RestTemplate();
+
+			final HttpEntity<Map<String, String>> httpEntity = new HttpEntity<Map<String, String>>(criteria);
+
+			final ResponseEntity<Usuario[]> requestResponse = restTemplate.exchange(endpoint, HttpMethod.POST,
+					httpEntity, Usuario[].class);
+
+			response = Arrays.asList(requestResponse.getBody());
+
+		} catch (final Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		return response;
 	}
 
 }

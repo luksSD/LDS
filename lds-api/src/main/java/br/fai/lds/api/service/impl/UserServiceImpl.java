@@ -1,6 +1,8 @@
 package br.fai.lds.api.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,16 @@ public class UserServiceImpl implements UserService {
 	public boolean delete(final Long id) {
 
 		return dao.delete(id);
+	}
+
+	@Override
+	public List<Usuario> readByCriteria(final Map<String, String> criteria) {
+
+		if (criteria == null || criteria.size() == 0) {
+			return new ArrayList<Usuario>();
+		}
+
+		return dao.readByCriteria(criteria);
 	}
 
 }

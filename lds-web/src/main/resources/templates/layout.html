@@ -29,14 +29,19 @@
 		</button>
 
 		<!-- Navbar Search-->
-		<form
-			class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+		<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" th:action="@{/user/read-by-criteria}" method="POST">
 			<div class="input-group">
+				
+				
 				<input class="form-control" type="text"
-					placeholder="Procurar por..." aria-label="Search"
+					placeholder="Procurar por..." 
+					th:name="value" 
+					aria-label="Search"
 					aria-describedby="basic-addon2" />
+					
+					
 				<div class="input-group-append">
-					<button class="btn btn-primary" type="button">
+					<button class="btn btn-primary" type="submit">
 						<i class="fas fa-search"></i>
 					</button>
 				</div>

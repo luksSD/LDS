@@ -16,6 +16,8 @@ public interface UserService {
 
 	List<Usuario> readAll();
 
+	List<Usuario> readByCriteria(String value);
+
 	Usuario readById(Long id);
 
 	boolean update(Usuario entity);

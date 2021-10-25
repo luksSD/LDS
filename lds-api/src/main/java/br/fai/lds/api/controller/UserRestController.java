@@ -1,6 +1,7 @@
 package br.fai.lds.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,4 +50,10 @@ public class UserRestController {
 		return ResponseEntity.ok(service.delete(id));
 	}
 
+	// o certo a se usar é o query parameter
+	@PostMapping("/read-by-criteria")
+	public ResponseEntity<List<Usuario>> readCriteria(@RequestBody final Map<String, String> criteria) {
+
+		return ResponseEntity.ok(service.readByCriteria(criteria));
+	}
 }

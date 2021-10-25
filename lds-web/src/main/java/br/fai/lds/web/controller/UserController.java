@@ -20,6 +20,16 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@PostMapping("/read-by-criteria")
+	public String getByCriteria(final String value, final Model model) {
+
+		final List<Usuario> users = userService.readByCriteria(value);
+
+		model.addAttribute("listaUsuarios", users);
+
+		return "user/list";
+	}
+
 	@GetMapping("/listar")
 	public String getListPage(final Model model) {
 
