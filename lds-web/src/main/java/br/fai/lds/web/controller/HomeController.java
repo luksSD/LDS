@@ -11,4 +11,10 @@ public class HomeController {
 		return "home";
 	}
 
+	@GetMapping("/not-found")
+	public String getNotFoundPage() {
+
+		return "exception/not-found";
+	}
+
 }

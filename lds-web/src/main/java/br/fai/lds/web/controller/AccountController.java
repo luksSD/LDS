@@ -34,4 +34,9 @@ public class AccountController {
 		return "redirect:/user/listar";
 	}
 
+	@GetMapping("/login-page")
+	public String getLoginPage() {
+		return "account/login";
+	}
+
 }
