@@ -18,6 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 
+		// sugestao de uso bcrypt*
 		auth.authenticationProvider(authenticationProvider);
 	}
 
@@ -26,11 +27,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http
 
-				.authorizeRequests().antMatchers("/resources/**").permitAll().antMatchers("/").permitAll().anyRequest()
-				.authenticated().and().formLogin().loginPage("/account/login-page").loginProcessingUrl("/login")
-				.permitAll().defaultSuccessUrl("/").and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").and()
-				.exceptionHandling().accessDeniedPage("/not-found");
+				.authorizeRequests()
+					.antMatchers("/resources/**").permitAll()
+					.antMatchers("/").permitAll()
+				.anyRequest().authenticated()
+				.and()
+				.formLogin()
+					.loginPage("/account/login-page")
+					.loginProcessingUrl("/login").permitAll()
+					.defaultSuccessUrl("/")
+				.and()
+				.logout()
+					.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").and()
+					.exceptionHandling().accessDeniedPage("/not-found");
 	}
 
 }

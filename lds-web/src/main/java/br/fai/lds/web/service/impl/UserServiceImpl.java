@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.fai.lds.model.Usuario;
+import br.fai.lds.web.service.RestService;
 import br.fai.lds.web.service.UserService;
 
 @Service
@@ -149,6 +152,35 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return response;
+	}
+
+	@Override
+	public Usuario validateUserNameAndPassword(final String username, final String password) {
+
+		Usuario usuario = null;
+
+		final String endpoint = "http://localhost:8085/api/account/login";
+
+		final RestTemplate restTemplate = new RestTemplate();
+
+		try {
+			final HttpHeaders httpHeaders = RestService.getAuthenticationHeaders(username, password);
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
+
+			final ResponseEntity<Usuario> responseEntity = restTemplate.exchange(endpoint, HttpMethod.POST, httpEntity,
+					Usuario.class);
+
+			if (responseEntity.getStatusCode() != HttpStatus.OK) {
+				return null;
+			}
+
+			usuario = responseEntity.getBody();
+
+		} catch (final Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		return usuario;
 	}
 
 }

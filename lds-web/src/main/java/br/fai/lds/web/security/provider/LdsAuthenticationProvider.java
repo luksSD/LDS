@@ -3,6 +3,7 @@ package br.fai.lds.web.security.provider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,8 +12,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import br.fai.lds.model.Usuario;
+import br.fai.lds.web.service.UserService;
+
 @Component
 public class LdsAuthenticationProvider implements AuthenticationProvider {
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
@@ -21,6 +28,12 @@ public class LdsAuthenticationProvider implements AuthenticationProvider {
 		final String password = authentication.getCredentials().toString();
 
 		System.out.println("Username: " + username + "  Password: " + password);
+
+		final Usuario user = userService.validateUserNameAndPassword(username, password);
+
+		if (user == null) {
+			return null;
+		}
 
 		final List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
 		grantedAuthorityList.add(new SimpleGrantedAuthority("ROLE_ADMINISTRADOR"));

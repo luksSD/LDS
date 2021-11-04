@@ -24,4 +24,6 @@ public interface UserService {
 
 	boolean deleteById(Long id);
 
+	Usuario validateUserNameAndPassword(String username, String password);
+
 }

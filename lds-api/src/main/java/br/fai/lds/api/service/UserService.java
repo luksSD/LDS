@@ -17,4 +17,6 @@ public interface UserService {
 
 	boolean delete(Long id);
 
+	Usuario validateLogin(String encodedData);
+
 }

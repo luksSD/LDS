@@ -244,4 +244,53 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 
+	@Override
+	public Usuario validadeUsernameAndPassword(final String username, final String password) {
+		Usuario user = null;
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+
+			connection = ConnectionFactory.getConnection();
+
+			final String sql = "SELECT * FROM usuario WHERE nome_usuario = ? AND senha = ?;";
+
+			preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+
+				user = new Usuario();
+				user.setId(resultSet.getLong("id"));
+				user.setNomeUsuario(resultSet.getString("nome_usuario"));
+				user.setSenha(resultSet.getString("senha"));
+				user.setNomeCompleto(resultSet.getString("nome_completo"));
+				user.setEmail(resultSet.getString("email"));
+				user.setTipo(resultSet.getString("tipo"));
+				user.setEstaAtivo(resultSet.getBoolean("esta_ativo"));
+				user.setDataNascimento(resultSet.getTimestamp("data_nascimento"));
+				user.setUltimoAcesso(resultSet.getTimestamp("ultimo_acesso"));
+				user.setCriadoEm(resultSet.getTimestamp("criado_em"));
+				user.setAvatar(resultSet.getBytes("avatar"));
+
+			}
+
+		} catch (final Exception e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			ConnectionFactory.close(resultSet, preparedStatement, connection);
+		}
+		return user;
+	}
+
 }

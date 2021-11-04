@@ -17,4 +17,6 @@ public interface UserDao {
 
 	boolean delete(Long id);
 
+	Usuario validadeUsernameAndPassword(final String username, String password);
+
 }

@@ -1,6 +1,9 @@
 package br.fai.lds.api.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +56,71 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return dao.readByCriteria(criteria);
+	}
+
+	@Override
+	public Usuario validateLogin(final String encodedData) {
+
+		final Map<CREDENCIAIS, String> credentialsMap = decodeAndGetUsernameAndPassword(encodedData);
+
+		if (credentialsMap == null || credentialsMap.size() != 2) {
+			return null;
+
+		}
+
+		final String username = credentialsMap.get(CREDENCIAIS.USUARIO);
+		final String password = credentialsMap.get(CREDENCIAIS.SENHA);
+
+		return dao.validadeUsernameAndPassword(username, password);
+
+	}
+
+	private enum CREDENCIAIS {
+
+		USUARIO, SENHA
+	}
+
+	private Map<CREDENCIAIS, String> decodeAndGetUsernameAndPassword(final String encodedData) {
+
+		// Basic + dados
+		final String[] splittedData = encodedData.split("Basic ");
+
+		if (splittedData.length != 2) {
+			return null;
+		}
+
+		// dados
+		final byte[] decodedBytes = Base64.getDecoder().decode(splittedData[1]);
+
+		try {
+
+			// Username=nome_usuario;Password=senha
+			final String decodedString = new String(decodedBytes, "utf-8");
+
+			final String[] firstPart = decodedString.split("username=");
+
+			if (firstPart.length != 2) {
+				return null;
+			}
+
+			// nome_usuario;Password=senha
+			final String[] credentials = firstPart[1].split(";Password=");
+
+			if (credentials.length != 2) {
+				return null;
+			}
+
+			final Map<CREDENCIAIS, String> credentialsMap = new HashMap<CREDENCIAIS, String>();
+			credentialsMap.put(CREDENCIAIS.USUARIO, credentials[0]);
+			credentialsMap.put(CREDENCIAIS.SENHA, credentials[1]);
+
+			return credentialsMap;
+
+		} catch (final UnsupportedEncodingException e) {
+			System.out.println(e.getMessage());
+
+			return null;
+		}
 	}
 
 }

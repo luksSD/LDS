@@ -1,0 +1,32 @@
+package br.fai.lds.web.service;
+
+import java.util.Base64;
+
+import org.springframework.http.HttpHeaders;
+
+public class RestService {
+
+	public static HttpHeaders getAuthenticationHeaders(final String username, final String password) {
+
+		final String auth = "Usernmae=" + username + "; Password=" + password;
+
+		try {
+			final byte[] encondedBytes = Base64.getEncoder().encode(auth.getBytes("utf-8"));
+
+			System.out.println("Dados em formato base64: " + new String(encondedBytes));
+
+			final String header = "Basic " + new String(encondedBytes);
+
+			final HttpHeaders headers = new HttpHeaders();
+			headers.set("Authorization", header);
+
+			return headers;
+
+		} catch (final Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+
+	}
+
+}
