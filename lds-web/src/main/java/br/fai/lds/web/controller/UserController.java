@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.fai.lds.model.Usuario;
+import br.fai.lds.web.security.provider.LdsAuthenticationProvider;
 import br.fai.lds.web.service.UserService;
 
 @Controller
@@ -19,6 +20,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private LdsAuthenticationProvider authenticationProvider;
 
 	@PostMapping("/read-by-criteria")
 	public String getByCriteria(final String value, final Model model) {
@@ -73,6 +77,15 @@ public class UserController {
 
 		return getListPage(model);
 
+	}
+
+	@GetMapping("/profile")
+	public String getProfile(final Model model) {
+
+		final Usuario user = authenticationProvider.getAuthenticatedUser();
+		model.addAttribute("usuario", user);
+
+		return "user/detail";
 	}
 
 }

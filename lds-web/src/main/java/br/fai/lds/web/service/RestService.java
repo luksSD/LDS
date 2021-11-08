@@ -8,7 +8,7 @@ public class RestService {
 
 	public static HttpHeaders getAuthenticationHeaders(final String username, final String password) {
 
-		final String auth = "Usernmae=" + username + "; Password=" + password;
+		final String auth = "Username=" + username + ";Password=" + password;
 
 		try {
 			final byte[] encondedBytes = Base64.getEncoder().encode(auth.getBytes("utf-8"));

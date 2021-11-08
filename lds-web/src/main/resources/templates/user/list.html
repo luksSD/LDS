@@ -62,18 +62,23 @@
 													</a>
 
 												</div>
+
+												
 												<div class="col-4">
 													<a th:href="@{/user/editar/{id} (id=${usuario.id})}"
 														class="btn btn-warning btn-sm"> <i class="fas fa-lock"></i>
 													</a>
 												</div>
-												<div class="col-4">
+												<div class="col-4" sec:authorize="hasRole('ADMINISTRADOR')">
 
 													<a th:href="@{/user/deletar/{id} (id=${usuario.id})}"
 														class="btn btn-danger btn-sm"> <i
 														class="fas fa-user-alt-slash"></i>
 													</a>
 												</div>
+												
+												
+												
 											</div>
 										</td>
 									</tr>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
@@ -29,17 +30,17 @@
 		</button>
 
 		<!-- Navbar Search-->
-		<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" th:action="@{/user/read-by-criteria}" method="POST">
+		<form
+			class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"
+			th:action="@{/user/read-by-criteria}" method="POST">
 			<div class="input-group">
-				
-				
+
+
 				<input class="form-control" type="text"
-					placeholder="Procurar por..." 
-					th:name="value" 
-					aria-label="Search"
+					placeholder="Procurar por..." th:name="value" aria-label="Search"
 					aria-describedby="basic-addon2" />
-					
-					
+
+
 				<div class="input-group-append">
 					<button class="btn btn-primary" type="submit">
 						<i class="fas fa-search"></i>
@@ -57,10 +58,19 @@
 			</a>
 				<div class="dropdown-menu dropdown-menu-right"
 					aria-labelledby="userDropdown">
-					<a class="dropdown-item" href="#">Perfil</a>
 
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" th:href="@{/logout}">Sair</a>
+					<div sec:authorize="!isAuthenticated()">
+						<a class="dropdown-item" th:href="@{/account/login-page}">Entrar</a>
+					</div>
+
+					<div sec:authorize="isAuthenticated()">
+						<a class="dropdown-item" th:href="@{/user/profile}">Perfil</a>
+
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" th:href="@{/logout}">Sair</a>
+					</div>
+
+
 				</div></li>
 		</ul>
 
@@ -77,29 +87,44 @@
 								<i class="fas fa-tachometer-alt"></i>
 							</div> Home
 						</a>
+
+
+
 						<div class="sb-sidenav-menu-heading">Opções</div>
 
-						<a class="nav-link collapsed" href="#" data-toggle="collapse"
-							data-target="#collapseUsers" aria-expanded="false">
-							<div class="sb-nav-link-icon">
-								<i class="fas fa-book-open"></i>
-							</div> Usuarios
-							<div class="sb-sidenav-collapse-arrow">
-								<i class="fas fa-angle-down"></i>
+						<div sec:authorize="isAuthenticated()">
+							<a class="nav-link collapsed" href="#" data-toggle="collapse"
+								data-target="#collapseUsers" aria-expanded="false">
+								<div class="sb-nav-link-icon">
+									<i class="fas fa-book-open"></i>
+								</div> Usuarios
+								<div class="sb-sidenav-collapse-arrow">
+									<i class="fas fa-angle-down"></i>
+								</div>
+							</a>
+
+
+							<div class="collapse" id="collapseUsers"
+								aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+								<nav class="sb-sidenav-menu-nested nav">
+
+									<div sec:authorize="hasRole('USUARIO')">
+										<a class="nav-link" th:href="@{/user/listar}">Listar</a>
+									</div>
+
+									<div sec:authorize="hasRole('ADMINISTRADOR')">
+										<a class="nav-link" th:href="@{/account/register-page}">Criar</a>
+									</div>
+
+
+
+
+								</nav>
 							</div>
-						</a>
 
-
-						<div class="collapse" id="collapseUsers"
-							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" th:href="@{/user/listar}">Listar</a> 
-								<a class="nav-link" th:href="@{/account/register-page}">Registrar</a>
-								<a class="nav-link" th:href="@{/account/login-page}">Login</a>
-								<!-- 								<a class="nav-link" th:href="@{/user/editar}">Editar</a> -->
-
-							</nav>
 						</div>
+
+
 
 
 
@@ -139,8 +164,9 @@
 						<div class="collapse" id="collapseFormularios"
 							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" th:href="@{/terceiro-formulario/listar}">Listar</a> <a
-									class="nav-link" th:href="@{/terceiro-formulario/pagina-cadastro}">Criar</a>
+								<a class="nav-link" th:href="@{/terceiro-formulario/listar}">Listar</a>
+								<a class="nav-link"
+									th:href="@{/terceiro-formulario/pagina-cadastro}">Criar</a>
 							</nav>
 						</div>
 

@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
 
 		Usuario usuario = null;
 
-		final String endpoint = "http://localhost:8085/api/account/login";
+		final String endpoint = "http://localhost:8085/api/v1/account/login";
 
 		final RestTemplate restTemplate = new RestTemplate();
 

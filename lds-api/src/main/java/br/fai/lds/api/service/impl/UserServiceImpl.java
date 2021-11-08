@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 			// Username=nome_usuario;Password=senha
 			final String decodedString = new String(decodedBytes, "utf-8");
 
-			final String[] firstPart = decodedString.split("username=");
+			final String[] firstPart = decodedString.split("Username=");
 
 			if (firstPart.length != 2) {
 				return null;
