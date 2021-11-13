@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.fai.lds.api.service.JwtService;
 import br.fai.lds.api.service.UserService;
 import br.fai.lds.db.dao.UserDao;
 import br.fai.lds.model.Usuario;
@@ -19,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao dao;
+	
+	@Autowired
+	private JwtService jwtService;
 
 	@Override
 	public List<Usuario> readAll() {
@@ -71,13 +75,25 @@ public class UserServiceImpl implements UserService {
 		final String username = credentialsMap.get(CREDENCIAIS.USUARIO);
 		final String password = credentialsMap.get(CREDENCIAIS.SENHA);
 
-		return dao.validadeUsernameAndPassword(username, password);
+		final Usuario user = dao.validadeUsernameAndPassword(username, password);
+		
+		if (user == null) {
+			return null;
+		}
+		
+		final String token = jwtService.getJWTToken(user);
+		
+		user.setSenha(null);
+		user.setToken(token);
+		
+		return user;
 
 	}
 
 	private enum CREDENCIAIS {
 
-		USUARIO, SENHA
+		USUARIO, 
+		SENHA,
 	}
 
 	private Map<CREDENCIAIS, String> decodeAndGetUsernameAndPassword(final String encodedData) {

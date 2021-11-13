@@ -14,6 +14,17 @@ public class Usuario extends BasePojo {
 	private Timestamp ultimoAcesso;
 	private Timestamp criadoEm;
 	private byte[] avatar;
+	private String token;
+	
+	
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(final String token) {
+		this.token = token;
+	}
 
 	public String getNomeUsuario() {
 		return nomeUsuario;
