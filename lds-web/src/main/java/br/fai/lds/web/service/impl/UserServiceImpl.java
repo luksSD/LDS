@@ -30,9 +30,11 @@ public class UserServiceImpl implements UserService {
 
 		try {
 
+			final HttpHeaders headers = RestService.getRequestHeaders();
+
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<Usuario[]> requestResponse = restTemplate.exchange(endpoint, HttpMethod.GET,
 					httpEntity, Usuario[].class);
@@ -55,9 +57,11 @@ public class UserServiceImpl implements UserService {
 
 		try {
 
+			final HttpHeaders headers = RestService.getRequestHeaders();
+
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<Usuario> requestResponse = restTemplate.exchange(endpoint, HttpMethod.GET, httpEntity,
 					Usuario.class);
@@ -79,9 +83,12 @@ public class UserServiceImpl implements UserService {
 		final String endpoint = "http://localhost:8085/api/v1/user/update";
 
 		try {
+
+			final HttpHeaders headers = RestService.getRequestHeaders();
+
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<Usuario> httpEntity = new HttpEntity<Usuario>(entity);
+			final HttpEntity<Usuario> httpEntity = new HttpEntity<Usuario>(entity, headers);
 
 			final ResponseEntity<Boolean> responseEntity = restTemplate.exchange(endpoint, HttpMethod.PUT, httpEntity,
 					Boolean.class);
@@ -104,10 +111,11 @@ public class UserServiceImpl implements UserService {
 		final String endpoint = "http://localhost:8085/api/v1/user/delete/" + id;
 
 		try {
+			final HttpHeaders headers = RestService.getRequestHeaders();
 
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<Boolean> requestResponse = restTemplate.exchange(endpoint, HttpMethod.DELETE,
 					httpEntity, Boolean.class);
@@ -135,12 +143,15 @@ public class UserServiceImpl implements UserService {
 		List<Usuario> response = null;
 
 		try {
+
+			final HttpHeaders headers = RestService.getRequestHeaders();
+
 			final Map<String, String> criteria = new HashMap<String, String>();
 			criteria.put("AND nome_completo ilike", "%" + value + "%");
 
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<Map<String, String>> httpEntity = new HttpEntity<Map<String, String>>(criteria);
+			final HttpEntity<Map<String, String>> httpEntity = new HttpEntity<Map<String, String>>(criteria, headers);
 
 			final ResponseEntity<Usuario[]> requestResponse = restTemplate.exchange(endpoint, HttpMethod.POST,
 					httpEntity, Usuario[].class);
@@ -164,6 +175,9 @@ public class UserServiceImpl implements UserService {
 		final RestTemplate restTemplate = new RestTemplate();
 
 		try {
+
+			final HttpHeaders headers = RestService.getRequestHeaders();
+
 			final HttpHeaders httpHeaders = RestService.getAuthenticationHeaders(username, password);
 			final HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
 

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import br.fai.lds.model.Animal;
 import br.fai.lds.web.service.AnimalService;
+import br.fai.lds.web.service.RestService;
 
 @Service
 public class AnimalServiceImpl implements AnimalService {
@@ -23,9 +25,11 @@ public class AnimalServiceImpl implements AnimalService {
 
 		try {
 
+			final HttpHeaders headers = RestService.getRequestHeaders();
+
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<Animal[]> requestResponse = restTemplate.exchange(endpoint, HttpMethod.GET, httpEntity,
 					Animal[].class);
@@ -46,10 +50,11 @@ public class AnimalServiceImpl implements AnimalService {
 		Animal response = null;
 
 		try {
+			final HttpHeaders headers = RestService.getRequestHeaders();
 
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<Animal> requestResponse = restTemplate.exchange(endpoint, HttpMethod.GET, httpEntity,
 					Animal.class);
@@ -70,9 +75,11 @@ public class AnimalServiceImpl implements AnimalService {
 		final String endpoint = "http://localhost:8085/api/v1/animal/update";
 
 		try {
+			final HttpHeaders headers = RestService.getRequestHeaders();
+
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<Animal> httpEntity = new HttpEntity<Animal>(entity);
+			final HttpEntity<Animal> httpEntity = new HttpEntity<Animal>(entity, headers);
 
 			final ResponseEntity<Boolean> responseEntity = restTemplate.exchange(endpoint, HttpMethod.PUT, httpEntity,
 					Boolean.class);
@@ -94,10 +101,11 @@ public class AnimalServiceImpl implements AnimalService {
 		final String endpoint = "http://localhost:8085/api/v1/animal/delete/" + id;
 
 		try {
+			final HttpHeaders headers = RestService.getRequestHeaders();
 
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<Boolean> requestResponse = restTemplate.exchange(endpoint, HttpMethod.DELETE,
 					httpEntity, Boolean.class);
@@ -114,14 +122,17 @@ public class AnimalServiceImpl implements AnimalService {
 
 	@Override
 	public Long create(final Animal entity) {
+
 		Long id = Long.valueOf(-1);
 
 		final String endpoint = "http://localhost:8085/api/v1/animal/create";
 
 		try {
+			final HttpHeaders headers = RestService.getRequestHeaders();
+			
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<Animal> httpEntity = new HttpEntity<>(entity);
+			final HttpEntity<Animal> httpEntity = new HttpEntity<>(entity, headers);
 
 			final ResponseEntity<Long> responseEntity = restTemplate.exchange(endpoint, HttpMethod.POST, httpEntity,
 					Long.class);

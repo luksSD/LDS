@@ -20,7 +20,8 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 			csrf().disable()
 			.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/api/account/login").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/v1/account/login").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/v1/account/create-user").permitAll()
 			.anyRequest().authenticated();
 
 

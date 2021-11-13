@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import br.fai.lds.model.Jogo;
 import br.fai.lds.web.service.GameService;
+import br.fai.lds.web.service.RestService;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -23,10 +25,11 @@ public class GameServiceImpl implements GameService {
 		List<Jogo> response = null;
 
 		try {
+			final HttpHeaders headers = RestService.getRequestHeaders();
 
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<Jogo[]> requestResponse = restTemplate.exchange(endpoint, HttpMethod.GET, httpEntity,
 					Jogo[].class);
@@ -53,10 +56,11 @@ public class GameServiceImpl implements GameService {
 		Jogo response = null;
 
 		try {
-
+			final HttpHeaders headers = RestService.getRequestHeaders();
+			
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<Jogo> requestResponse = restTemplate.exchange(endpoint, HttpMethod.GET, httpEntity,
 					Jogo.class);

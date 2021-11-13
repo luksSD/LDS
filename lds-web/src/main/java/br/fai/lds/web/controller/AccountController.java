@@ -38,5 +38,10 @@ public class AccountController {
 	public String getLoginPage() {
 		return "account/login";
 	}
+	
+	@GetMapping("/password-recover")
+	public String getPasswordRevocerPage() {
+		return "account/password";
+	}
 
 }

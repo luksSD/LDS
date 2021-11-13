@@ -14,7 +14,7 @@
 				<div class="col-lg-8">
 					<div class="card shadow-lg border-0 rounded-lg mt-5">
 						<div class="card-header">
-							<h3 class="text-center font-weight-light my-4">App</h3>
+							<h3 class="text-center font-weight-light my-4">Login</h3>
 						</div>
 						<div class="card-body">
 							<form th:action="@{/login}" method="POST">
@@ -40,7 +40,7 @@
 									class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
 									
 									
-									<a class="small" href="password.html">Esqueceu a senha?</a>
+									<a class="small" th:href="@{/account/password-recover}">Esqueceu a senha?</a>
 									
 									<button class="btn btn-primary" type="submit">Login</button>
 									
@@ -49,7 +49,7 @@
 						</div>
 						<div class="card-footer text-center">
 							<div class="small">
-								<a href="register.html">Precisa de uma conta? Cadastre-se!</a>
+								<a th:href="@{/account/register-page}">Precisa de uma conta? Cadastre-se!</a>
 							</div>
 						</div>
 					</div>

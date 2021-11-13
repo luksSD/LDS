@@ -55,9 +55,9 @@ public class LdsAuthenticationProvider implements AuthenticationProvider {
 	public Usuario getAuthenticatedUser() {
 
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		final CustomUserDetails userDatils = (CustomUserDetails) authentication.getPrincipal();
+		final CustomUserDetails userDatails = (CustomUserDetails) authentication.getPrincipal();
 
-		return userDatils.getUsuario();
+		return userDatails.getUsuario();
 
 	}
 

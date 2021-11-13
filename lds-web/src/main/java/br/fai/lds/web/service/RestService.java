@@ -3,6 +3,11 @@ package br.fai.lds.web.service;
 import java.util.Base64;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import br.fai.lds.model.Usuario;
+import br.fai.lds.web.security.CustomUserDetails;
 
 public class RestService {
 
@@ -24,9 +29,35 @@ public class RestService {
 
 		} catch (final Exception e) {
 			System.out.println(e.getMessage());
+			return null;
 		}
-		return null;
+		
 
+	}
+	
+	public static HttpHeaders getRequestHeaders() {
+		
+		try {
+			
+			final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			final CustomUserDetails userDatails = (CustomUserDetails) authentication.getPrincipal();
+
+			final Usuario usuarioLogado = userDatails.getUsuario();
+
+			System.out.println("Cliente - Token do Usuario: " + usuarioLogado.getToken());
+			
+			final String authHeader = "Bearer " + usuarioLogado.getToken();
+			
+			final HttpHeaders headers = new HttpHeaders();
+			headers.set("Authorization", authHeader);
+			
+			return headers;
+			
+		} catch (final Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
 	}
 
 }

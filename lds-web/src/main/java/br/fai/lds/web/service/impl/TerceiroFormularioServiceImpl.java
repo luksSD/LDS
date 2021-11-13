@@ -4,12 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.fai.lds.model.TerceiroFormulario;
+import br.fai.lds.web.service.RestService;
 import br.fai.lds.web.service.TerceiroFormularioService;
 
 @Service
@@ -22,10 +24,12 @@ public class TerceiroFormularioServiceImpl implements TerceiroFormularioService 
 		List<TerceiroFormulario> response = null;
 
 		try {
+			
+			final HttpHeaders headers = RestService.getRequestHeaders();
 
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<String> httpEntity = new HttpEntity<String>("");
+			final HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 
 			final ResponseEntity<TerceiroFormulario[]> requestResponse = restTemplate.exchange(endpoint, HttpMethod.GET,
 					httpEntity, TerceiroFormulario[].class);
@@ -46,9 +50,11 @@ public class TerceiroFormularioServiceImpl implements TerceiroFormularioService 
 		final String endpoint = "http://localhost:8085/api/v1/terceiro-formulario/create";
 
 		try {
+			final HttpHeaders headers = RestService.getRequestHeaders();
+			
 			final RestTemplate restTemplate = new RestTemplate();
 
-			final HttpEntity<TerceiroFormulario> httpEntity = new HttpEntity<>(entity);
+			final HttpEntity<TerceiroFormulario> httpEntity = new HttpEntity<>(entity, headers);
 
 			final ResponseEntity<Long> responseEntity = restTemplate.exchange(endpoint, HttpMethod.POST, httpEntity,
 					Long.class);

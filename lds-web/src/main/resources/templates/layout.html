@@ -62,6 +62,10 @@
 					<div sec:authorize="!isAuthenticated()">
 						<a class="dropdown-item" th:href="@{/account/login-page}">Entrar</a>
 					</div>
+					
+					<div sec:authorize="!isAuthenticated()">
+						<a class="dropdown-item" th:href="@{/account/register-page}">Registrar</a>
+					</div>
 
 					<div sec:authorize="isAuthenticated()">
 						<a class="dropdown-item" th:href="@{/user/profile}">Perfil</a>
@@ -142,7 +146,7 @@
 						<div class="collapse" id="collapseGames"
 							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" th:href="@{/game/criar}">Criar</a> <a
+								<a  class="nav-link" th:href="@{/game/criar}">Criar</a> <a
 									class="nav-link" th:href="@{/game/listar}">Listar</a> <a
 									class="nav-link" th:href="@{/game/detalhes}">Detalhes</a> <a
 									class="nav-link" th:href="@{/game/editar}">Editar</a>
@@ -197,7 +201,15 @@
 				</div>
 				<div class="sb-sidenav-footer">
 					<div class="small">Logado como:</div>
-					Lucas Dias
+					
+					<div sec:authorize="!isAuthenticated()">
+						<span>Visitante</span>					
+					</div>
+					
+					<div sec:authorize="isAuthenticated()">
+						<span sec:authentication="name">Lucas Dias</span>
+					</div>
+					
 				</div>
 			</nav>
 		</div>
