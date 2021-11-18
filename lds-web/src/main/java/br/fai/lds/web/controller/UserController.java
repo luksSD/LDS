@@ -3,6 +3,7 @@ package br.fai.lds.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,6 +87,12 @@ public class UserController {
 		model.addAttribute("usuario", user);
 
 		return "user/detail";
+	}
+	
+	@GetMapping("/report/read-all")
+	public ResponseEntity<byte[]> getAllUsersReport(){
+		
+		return ResponseEntity.badRequest().build();
 	}
 
 }

@@ -26,6 +26,12 @@
 					</div>
 
 					<div class="card-body">
+						
+					<div class="row float-right" sec:authorize="hasRole('ADMINISTRADOR')">
+						<a th:href="@{/user/report/read-all}" target="_blank" class="btn btn-success">Relatório</a>					
+					</div>	
+						
+						
 						<div class="table-responsive">
 
 							<table class="table table-bordered" id="dataTable" width="100%"
