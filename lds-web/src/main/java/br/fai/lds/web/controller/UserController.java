@@ -1,8 +1,16 @@
 package br.fai.lds.web.controller;
 
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.fai.lds.model.Usuario;
 import br.fai.lds.web.security.provider.LdsAuthenticationProvider;
+import br.fai.lds.web.service.ReportService;
 import br.fai.lds.web.service.UserService;
 
 @Controller
@@ -24,6 +33,9 @@ public class UserController {
 
 	@Autowired
 	private LdsAuthenticationProvider authenticationProvider;
+	
+	@Autowired
+	private ReportService reportService;
 
 	@PostMapping("/read-by-criteria")
 	public String getByCriteria(final String value, final Model model) {
@@ -92,7 +104,35 @@ public class UserController {
 	@GetMapping("/report/read-all")
 	public ResponseEntity<byte[]> getAllUsersReport(){
 		
-		return ResponseEntity.badRequest().build();
+		final String filePath = reportService.generateAndGetPdfFilePath();
+		
+		if(filePath.isEmpty()) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		final File pdfFile = Paths.get(filePath).toFile();
+		
+		try {
+			final byte[] fileContent = Files.readAllBytes(pdfFile.toPath());
+			
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.parseMediaType("application/pdf"));
+			
+			
+//			headers.add("Content-Disposition", "attachment; filename=" + pdfFile.getName());
+			headers.add("Content-Disposition", "inline; filename=" + pdfFile.getName());			
+			headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+			
+			
+			return new ResponseEntity<byte[]>(fileContent, headers, HttpStatus.OK);
+			
+		} catch (final IOException e) {
+			
+			System.out.println(e.getMessage());
+			
+			return ResponseEntity.badRequest().build();
+		}
+		 
 	}
 
 }
